@@ -1,0 +1,5 @@
+safe:        false
+
+destination: ./_site
+plugins:     ./_plugins
+exclude:     ["GemFile", "Gemfile.lock", "README.md"]
