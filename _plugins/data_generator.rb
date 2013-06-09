@@ -1,3 +1,5 @@
+require 'find'
+
 module Jekyll
   class DataGenerator < Generator
     safe true
@@ -18,9 +20,26 @@ module Jekyll
     end
 
     def get_all_data_file_paths(base_folder)
+      xls_file_paths = []
+
+      Find.find(base_folder) do |path|
+        xls_file_paths << path if path =~ /.*\.xls$/
+      end
+
+      xls_file_paths
     end
 
     def parse_data_file(file_path, output_folder)
+      return nil if !File.exist?(file_path)
+
+      puts "parsing data file : #{file_path}"
+
+      file_name = File.basename(file_path)
+      json_file_path = output_folder + "/" + file_name.gsub(".xls", ".json")
+
+      XlsParser.new(file_path).generate_json(json_file_path)
+
+      puts "parsed json file : #{json_file_path}"
     end
   end
 end
