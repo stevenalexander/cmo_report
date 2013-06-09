@@ -1,4 +1,5 @@
 require 'find'
+require_relative 'extensions/string.rb'
 
 module Jekyll
   class DataGenerator < Generator
@@ -35,7 +36,7 @@ module Jekyll
       puts "parsing data file : #{file_path}"
 
       file_name = File.basename(file_path)
-      json_file_path = output_folder + "/" + file_name.gsub(".xls", ".json")
+      json_file_path = output_folder + "/" + file_name.gsub(".xls", ".json").to_slug
 
       XlsParser.new(file_path).generate_json(json_file_path)
 

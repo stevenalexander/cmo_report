@@ -40,13 +40,13 @@ describe DataGenerator do
 
   describe "parse_data_file" do
     it "should call XlsParser with the file_path and the output dir" do
-      file_path = "_spec/test_data/graphs_38_C1_G1.xls"
+      file_path = "_spec/test_data/sub dir1/56 C2 G1 Life Expectancy.xls"
       output_path = "_spec/test_data"
 
       xls_parser = double()
       xls_parser.stub(:generate_json)
       XlsParser.should_receive(:new).with(file_path).and_return(xls_parser)
-      xls_parser.should_receive(:generate_json).with(output_path + "/graphs_38_C1_G1.json")
+      xls_parser.should_receive(:generate_json).with(output_path + "/56-c2-g1-life-expectancy.json")
 
       @data_generator.parse_data_file(file_path, output_path)
     end
