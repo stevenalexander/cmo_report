@@ -35,9 +35,11 @@ class XlsParser
   def generate_json(json_file_path)
     content = {
       :orginal_file_name => @file_name,
+      :description => nil,
       :summary => nil,
       :data => []
     }
+    metadata_description_key = "Illustration description:"
 
     (0..@xls.sheet_count).each do |i|
       sheet = @xls.worksheet(i)
@@ -48,6 +50,10 @@ class XlsParser
       elsif is_data_sheet(sheet)
         content[:data] << generate_data_hash(sheet)
       end
+    end
+
+    if content[:data].length > 0 &&  content[:data][0].has_key?("metadata") && content[:data][0]["metadata"].has_key?(metadata_description_key)
+      content[:description] =  content[:data][0]["metadata"][metadata_description_key]
     end
 
     File.open(json_file_path, 'w+') {|f| f.write(content.to_json) }
@@ -65,7 +71,7 @@ class XlsParser
   end
 
   def generate_data_hash(worksheet)
-    data = { :metadata => {}, :data => [] }
+    data = { :name => worksheet.name, :metadata => {}, :data => [] }
     data_sheet_ons_column_header = "ONS 9 character code"
     found_data_column_header = false
     headers = []

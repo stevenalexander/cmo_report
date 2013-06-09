@@ -96,7 +96,10 @@ describe XlsParser do
         @json_file_path = "map.json"
 
         @parser.stub(:generate_summary_hash).and_return({})
-        @parser.stub(:generate_data_hash).and_return({ "name" => "Data sheet 1" })
+        @parser.stub(:generate_data_hash).and_return({
+          "name" => "Data sheet 1",
+          "metadata" => { "Illustration description:" => "Population density by upper tier local authority, England, 2010" },
+          "data" => [] })
 
         @parser.generate_json(@json_file_path)
         @content = File.read(@json_file_path) if File.exists?(@json_file_path)
@@ -110,6 +113,9 @@ describe XlsParser do
       end
       it "contains original filename" do
         @json["orginal_file_name"].should eq "maps_36_C1_M1.xls"
+      end
+      it "contains the description" do
+        @json["description"].should eq "Population density by upper tier local authority, England, 2010"
       end
       it "contains no summary worksheet contents" do
         @json.has_key?("summary").should be_true
@@ -184,6 +190,10 @@ describe XlsParser do
     context "sample map data sheet" do
       before :each do
         @data_hash = @map_parser.generate_data_hash(@map_data_sheet_worksheet)
+      end
+      it "should include the worksheet name as the name" do
+        @data_hash.has_key?(:name).should be_true
+        @data_hash[:name].should eq "Data sheet 1"
       end
       it "should include the metadata from the data sheet in the form of key value pairs" do
         @data_hash.has_key?(:metadata).should be_true
