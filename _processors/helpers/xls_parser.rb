@@ -39,7 +39,6 @@ class XlsParser
       :summary => nil,
       :data => []
     }
-    metadata_description_key = "Illustration description:"
 
     (0..@xls.sheet_count).each do |i|
       sheet = @xls.worksheet(i)
@@ -52,8 +51,9 @@ class XlsParser
       end
     end
 
-    if content[:data].length > 0 &&  content[:data][0].has_key?("metadata") && content[:data][0]["metadata"].has_key?(metadata_description_key)
-      content[:description] =  content[:data][0]["metadata"][metadata_description_key]
+    metadata_description_key = "Illustration description"
+    if content[:data].length > 0 &&  content[:data][0].has_key?(:metadata) && content[:data][0][:metadata].has_key?(metadata_description_key)
+      content[:description] =  content[:data][0][:metadata][metadata_description_key]
     end
 
     File.open(json_file_path, 'w+') {|f| f.write(content.to_json) }
@@ -103,6 +103,7 @@ class XlsParser
     value = row[data_start_index+1]
     if !key.nil?   && !key.to_s.empty? &&
        !value.nil? && !value.to_s.empty?
+      key = key.to_s.strip.gsub(/:$/, '')
       hash[key] = value
     end
   end

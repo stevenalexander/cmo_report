@@ -1,6 +1,7 @@
 require 'find'
 require 'fileutils'
 require_relative 'extensions/string.rb'
+require_relative 'helpers/xls_parser.rb'
 
 class DataGenerator
 

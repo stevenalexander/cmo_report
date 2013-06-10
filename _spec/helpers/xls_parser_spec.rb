@@ -97,9 +97,9 @@ describe XlsParser do
 
         @parser.stub(:generate_summary_hash).and_return({})
         @parser.stub(:generate_data_hash).and_return({
-          "name" => "Data sheet 1",
-          "metadata" => { "Illustration description:" => "Population density by upper tier local authority, England, 2010" },
-          "data" => [] })
+          :name => "Data sheet 1",
+          :metadata => { "Illustration description" => "Population density by upper tier local authority, England, 2010" },
+          :data => [] })
 
         @parser.generate_json(@json_file_path)
         @content = File.read(@json_file_path) if File.exists?(@json_file_path)
@@ -130,6 +130,41 @@ describe XlsParser do
         File.delete(@json_file_path) if File.exists?(@json_file_path)
       end
     end
+
+    context "sample graph file" do
+      before :all do
+        @parser = XlsParser.new(SAMPLE_XLS_GRAPH_PATH)
+        @json_file_path = "graph.json"
+
+        @parser.generate_json(@json_file_path)
+        @content = File.read(@json_file_path) if File.exists?(@json_file_path)
+        @json = JSON.parse(@content) if !@content.nil?
+      end
+      it "generates a json file" do
+        File.exists?(@json_file_path).should be_true
+      end
+      it "content is json" do
+        @json.nil?.should be_false
+      end
+      it "contains original filename" do
+        @json["orginal_file_name"].should eq "graphs_38_C1_G1.xls"
+      end
+      it "contains the description" do
+        @json["description"].should eq "Population projections by age and sex 2000, 2010, 2020"
+      end
+      it "contains summary worksheet contents" do
+        @json.has_key?("summary").should be_true
+      end
+      it "contains the two Data sheet worksheet contents" do
+        @json.has_key?("data").should be_true
+        (@json["data"].length == 2).should be_true
+        @json["data"][0]["name"].should eq "Data sheet 1"
+        @json["data"][1]["name"].should eq "Data sheet 1 (2)"
+      end
+      after :all do
+        File.delete(@json_file_path) if File.exists?(@json_file_path)
+      end
+    end
   end
 
   describe "generate_summary_hash" do
@@ -152,8 +187,8 @@ describe XlsParser do
       it "should include the metadata from the data sheet in the form of key value pairs" do
         @data_hash.has_key?(:metadata).should be_true
         @data_hash[:metadata].keys.length.should eq 20
-        @data_hash[:metadata]["Chapter:"].should eq "Chapter 1: Demography"
-        @data_hash[:metadata]["Significance:"].should eq "Complete if applicable - Significantly better than the England average, Significantly worse than the England average, No significance can be calculated"
+        @data_hash[:metadata]["Chapter"].should eq "Chapter 1: Demography"
+        @data_hash[:metadata]["Significance"].should eq "Complete if applicable - Significantly better than the England average, Significantly worse than the England average, No significance can be calculated"
       end
       it "should include the data from the data sheet table section in the form an array of hashes" do
         @data_hash.has_key?(:data).should be_true
@@ -198,8 +233,8 @@ describe XlsParser do
       it "should include the metadata from the data sheet in the form of key value pairs" do
         @data_hash.has_key?(:metadata).should be_true
         @data_hash[:metadata].keys.length.should eq 20
-        @data_hash[:metadata]["Chapter:"].should eq "Chapter 1: Demography"
-        @data_hash[:metadata]["Significance:"].should eq "Complete if applicable - Significantly better than the England average, Significantly worse than the England average, No significance can be calculated"
+        @data_hash[:metadata]["Chapter"].should eq "Chapter 1: Demography"
+        @data_hash[:metadata]["Significance"].should eq "Complete if applicable - Significantly better than the England average, Significantly worse than the England average, No significance can be calculated"
       end
       it "should include the data from the data sheet table section in the form an array of hashes" do
         @data_hash.has_key?(:data).should be_true
