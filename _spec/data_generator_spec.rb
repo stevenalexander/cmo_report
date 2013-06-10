@@ -1,9 +1,6 @@
 # encoding: utf-8
-require 'jekyll'
-require_relative "../_plugins/data_generator.rb"
-require_relative "../_plugins/helpers/xls_parser.rb"
-
-include Jekyll
+require_relative "../_processors/data_generator.rb"
+require_relative "../_processors/helpers/xls_parser.rb"
 
 describe DataGenerator do
   before(:each) do
@@ -23,7 +20,7 @@ describe DataGenerator do
       data_generator.should_receive(:parse_data_file).with("file_path1", DataGenerator::MAPS_OUTPUT_FOLDER)
       data_generator.should_receive(:parse_data_file).with("file_path2", DataGenerator::MAPS_OUTPUT_FOLDER)
 
-      data_generator.generate(@path)
+      data_generator.generate
     end
   end
 

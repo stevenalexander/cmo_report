@@ -1,5 +1,5 @@
 # encoding: utf-8
-require_relative "../../_plugins/helpers/xls_parser.rb"
+require_relative "../../_processors/helpers/xls_parser.rb"
 require 'json'
 require 'spreadsheet'
 
