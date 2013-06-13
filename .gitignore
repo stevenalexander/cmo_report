@@ -2,3 +2,4 @@ Gemfile.lock
 _jekyll_s3.yml
 .DS_Store
 .~lock*
+.jhw-cache

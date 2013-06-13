@@ -1,7 +1,9 @@
 describe("Main", function() {
   var main;
 
-  it("should be able to play a Song", function() {
-    expect("1").toEqual("1");
+  it("Data table should exist", function() {
+    loadFixtures('data-table.html');
+
+    expect($("#data-table").length).toEqual(1);
   });
 });
