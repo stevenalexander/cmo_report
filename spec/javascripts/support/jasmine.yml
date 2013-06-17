@@ -13,7 +13,10 @@
 src_files:
     - assets/javascripts/jquery-1.7.2.min.js
     - assets/javascripts/d3.v3.min.js
-    - assets/javascripts/**/*.js
+    - assets/javascripts/main.js
+    - assets/javascripts/visualisations.js
+    - assets/javascripts/charts/basechart.js
+    - assets/javascripts/charts/*.js
 
 # stylesheets
 #
