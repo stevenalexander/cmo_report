@@ -1,1 +1,0 @@
-jasmine.getFixtures().fixturesPath = '_spec/jasmine/fixtures';

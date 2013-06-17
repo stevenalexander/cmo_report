@@ -2,4 +2,4 @@ safe:        false
 
 destination: ./_site
 plugins:     ./_plugins
-exclude:     ["Gemfile", "Gemfile.lock", "README.md"]
+exclude:     ["Gemfile", "Gemfile.lock", "README.md", "spec", "Rakefile"]

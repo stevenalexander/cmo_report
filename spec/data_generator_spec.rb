@@ -26,19 +26,19 @@ describe DataGenerator do
 
   describe "get_all_data_file_paths" do
     it "should return all xls file paths under the base folder including sub dirs" do
-      file_paths = @data_generator.get_all_data_file_paths("_spec/test_data")
+      file_paths = @data_generator.get_all_data_file_paths("spec/test_data")
 
       file_paths.length.should eq 3
-      file_paths[0].should eq "_spec/test_data/graphs_38_C1_G1.xls"
-      file_paths[1].should eq "_spec/test_data/maps_36_C1_M1.xls"
-      file_paths[2].should eq "_spec/test_data/sub dir1/56 C2 G1 Life Expectancy.xls"
+      file_paths[0].should eq "spec/test_data/graphs_38_C1_G1.xls"
+      file_paths[1].should eq "spec/test_data/maps_36_C1_M1.xls"
+      file_paths[2].should eq "spec/test_data/sub dir1/56 C2 G1 Life Expectancy.xls"
     end
   end
 
   describe "parse_data_file" do
     it "should call XlsParser with the file_path and the output dir" do
-      file_path = "_spec/test_data/sub dir1/56 C2 G1 Life Expectancy.xls"
-      output_path = "_spec/test_data"
+      file_path = "spec/test_data/sub dir1/56 C2 G1 Life Expectancy.xls"
+      output_path = "spec/test_data"
 
       xls_parser = double()
       xls_parser.stub(:generate_json)

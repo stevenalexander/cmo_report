@@ -3,8 +3,8 @@ require_relative "../../_processors/helpers/xls_parser.rb"
 require 'json'
 require 'spreadsheet'
 
-SAMPLE_XLS_GRAPH_PATH = "_spec/test_data/graphs_38_C1_G1.xls"
-SAMPLE_XLS_MAP_PATH   = "_spec/test_data/maps_36_C1_M1.xls"
+SAMPLE_XLS_GRAPH_PATH = "spec/test_data/graphs_38_C1_G1.xls"
+SAMPLE_XLS_MAP_PATH   = "spec/test_data/maps_36_C1_M1.xls"
 
 describe XlsParser do
   before :all do

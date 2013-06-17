@@ -74,7 +74,7 @@ src_dir:
 #
 # spec_dir: spec/javascripts
 #
-spec_dir: '_spec/jasmine'
+spec_dir: 'spec/javascripts'
 
 # spec_helper
 #
@@ -86,6 +86,6 @@ spec_dir: '_spec/jasmine'
 #
 # spec_helper: spec/support/jasmine_helper.rb
 #
-spec_helper: _spec/jasmine/support/jasmine_helper.rb
+spec_helper: spec/javascripts/support/jasmine_helper.rb
 
 
